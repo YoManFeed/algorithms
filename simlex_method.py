@@ -1,15 +1,17 @@
 import numpy as np
+import re
+from main import *
 
 
 class SimplexMethod:
     def __init__(self, Zfunc, matrix_coefs, constants):
         """
         Решение для особого ввода данных, приведенных ограничений и на максимизацию
-        # TODO обощить ввод данных (использовать re и регулярные выражения)
+
         # TODO реализовать решение минимизации / привести задачу к максимизации
         # TODO реализовать приведение к ограничениям
         # TODO ещё сильнее обобщить ввод данных, которые содержат пропуски в x_i
-        
+
         :param Zfunc: Коэффициенты целевой функции (вектор)
         :param matrix_coefs: Матрица ограничений (матрица)
         :param constants: Вектор правой части ограничений (вектор)
@@ -77,26 +79,18 @@ class SimplexMethod:
         print('='*44)
 
 
-with open('input.txt', 'r') as file:
-    Zfunc = np.fromstring(file.readline(), sep=' ')
-    matrix = np.loadtxt(file)
+if __name__ == '__main__':
 
-np.set_printoptions(precision=2, suppress=True)
+    with open('input.txt', 'r') as file:
+        Zfunc = np.fromstring(file.readline(), sep=' ')
+        matrix = np.loadtxt(file)
 
-constants = matrix[:, -1]
-matrix_coefs = matrix[:, :-1]
+    np.set_printoptions(precision=2, suppress=True)
 
-simplex_solver = SimplexMethod(Zfunc, matrix_coefs, constants)
-simplex_solver.solve()
-simplex_solver.print_solution()
-print('Solved')
+    constants = matrix[:, -1]
+    matrix_coefs = matrix[:, :-1]
 
-# with open('input.txt', 'r') as file:
-#     Zfunc = np.fromstring(file.readline(), sep=' ')
-#     matrix_coefs = np.loadtxt(file)
-#
-
-# print("Objective Coefficients:", Zfunc)
-# print("Constraint Matrix:\n", matrix_coefs)
-
-
+    simplex_solver = SimplexMethod(Zfunc, matrix_coefs, constants)
+    simplex_solver.solve()
+    simplex_solver.print_solution()
+    print('Solved')
